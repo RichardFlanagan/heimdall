@@ -24,12 +24,12 @@ app.set('view engine', 'pug');
 mongoose.connect('mongodb://localhost/heimdall_test', {useNewUrlParser: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-	console.log("db connection")
-	User.find({ name: /^Ric/ }, function(err, users){
-		console.log(users)
-	});
-});
+// db.once('open', function() {
+	// console.log("db connection")
+	// User.find({ name: /^Ric/ }, function(err, users){
+		// console.log(users)
+	// });
+// });
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

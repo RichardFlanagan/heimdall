@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h1 #{review.title}
+  p Author: #{review.author.username}
+  p Created at: #{review.dateCreated}
+  p Description: #{review.body}
+  p Completed: #{review.completed}

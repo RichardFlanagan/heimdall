@@ -1,19 +1,14 @@
-User = require('../models/User');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 
 exports.index = function (req, res) {
-    // Contact.get(function (err, contacts) {
-    //     if (err) {
-    //         res.json({
-    //             status: "error",
-    //             message: err,
-    //         });
-    //     }
-    //     res.json({
-    //         status: "success",
-    //         message: "Contacts retrieved successfully",
-    //         data: contacts
-    //     });
-    // });
+    User.find({}, function (err, users) {
+        if (err) {
+            res.send(err);
+        }
+
+        res.render('users', { users: users });
+    });
 };
 
 // Handle create contact actions
@@ -37,20 +32,22 @@ exports.new = function (req, res) {
 
 // Handle view user info
 exports.view = function (req, res) {
-    User.findById(req.params.userId, function (err, user) {
-        if (err){
-            res.send(err);
+    // var User = mongoose.model('User');
+
+    User.findOne(
+        {username: req.params.username}, 
+        function (err, user) {
+            if (err){
+                res.send(err);
+            }
+
+            if (user){
+                res.render('user', { target_user: user.username });
+            } else{
+                res.send("user not found");
+            }
         }
-
-        // res.json({
-        //     message: 'user details loading..',
-        //     data: user
-        // });
-
-        res.render('user', { target_user: user.name });
-
-
-    });
+    );
 };
 
 
