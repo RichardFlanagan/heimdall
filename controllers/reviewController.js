@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var Review = mongoose.model('Review')
 
+
+// The index of Review, views all
 exports.index = function (req, res) {
     Review.find({}, function (err, reviews) {
         if (err) {
@@ -17,29 +19,32 @@ exports.index = function (req, res) {
     });
 };
 
-// Handle create Review actions
+
+// The view for creating a new Review
+exports.createReview = function (req, res) {
+    res.render('review/createReview');
+};
+
+
+// The POST action for creating a new Review
 exports.create = function (req, res) {
     var review = new Review();
     review.title = req.body.title;
     review.body = req.body.body;
     // review.author = req.body.author
 
-    // save the contact and check for errors
     review.save(function (err) {
         if (err){
             res.json(err);
         }
-
-        res.json({
-            message: 'New review created!',
-            data: review
-        });
+        // res.redirect('reviews/'+review.username);
+        res.render('review/viewReview', { review: review });
     });
 };
 
 
-// Handle view Review info
-exports.view = function (req, res) {
+// View a single Review
+exports.viewReview = function (req, res) {
     Review.findOne(
         {"_id": req.params.reviewId}, 
         function (err, review) {
@@ -47,14 +52,14 @@ exports.view = function (req, res) {
                 res.send(err);
             }
 
-            res.render('review', { review: review });
+            res.render('review/viewReview', { review: review });
         }
     );
 };
 
 
 // Handle update contact info
-exports.update = function (req, res) {
+// exports.update = function (req, res) {
 // Contact.findById(req.params.contact_id, function (err, contact) {
 //         if (err)
 //             res.send(err);
@@ -72,8 +77,10 @@ exports.update = function (req, res) {
 //             });
 //         });
 //     });
-};
+// };
 
 
 // Handle delete contact
-exports.delete = function (req, res) {};
+// exports.delete = function (req, res) {};
+
+

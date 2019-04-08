@@ -39,6 +39,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+var session = require('express-session');
+app.use(session({
+  resave: false, // don't save session if unmodified
+  saveUninitialized: false, // don't create session until something stored
+  secret: 'shhhh, very secret'
+}));
+
+
 app.use('/', indexRoutes);
 app.use('/users', usersRoutes);
 app.use('/reviews', reviewsRoutes);

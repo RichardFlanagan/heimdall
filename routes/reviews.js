@@ -4,13 +4,30 @@ var mongoose = require('mongoose');
 
 var reviewController = require('../controllers/reviewController');
 
+
+router.use('/',function(req, res, next){
+	// if (req.session.user) {
+	// 	next();
+	// } else {
+	// 	req.session.error = 'Access denied!';
+	// 	res.redirect('/login');
+	// }
+	console.log("user middleware");
+	next();
+});
+
 router.get('/', reviewController.index);
 router.post('/', reviewController.create);
 
+router.route('/create')
+    .get(reviewController.createReview);
+
 router.route('/:reviewId')
-    .get(reviewController.view)
+    .get(reviewController.viewReview);
     // .patch(reviewController.update)
     // .put(reviewController.update)
     // .delete(reviewController.delete);
+
+
 
 module.exports = router;

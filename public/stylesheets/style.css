@@ -1,8 +1,56 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color:#f0f0f0;
 }
 
 a {
   color: #00B7FF;
+}
+
+.page_container {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color:#f0f0f0;
+
+}
+
+.header_container {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  border:1px solid green;
+  color:green;
+  background-color:#b0b0b0;
+
+}
+
+.login_container {
+  border:1px solid green;
+  width: 400px;
+}
+
+form {
+  width: 80%;
+  margin: 0 auto;
+}
+
+label, input {
+  /* in order to define widths */
+  display: inline-block;
+}
+
+label {
+  width: 30%;
+  /* positions the label text beside the input */
+  text-align: right;
+}
+
+label + input {
+  width: 30%;
+  /* large margin-right to force the next element to the new-line
+     and margin-left to create a gutter between the label and input */
+  margin: 0 30% 0 4%;
+}
+
+/* only the submit button is matched by this selector,
+   but to be sure you could use an id or class for that button */
+input + input {
+  float: right;
 }

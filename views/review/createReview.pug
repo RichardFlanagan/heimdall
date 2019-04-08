@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+
+  h1 Create Review
+
+  form(method='POST' action='/reviews')
+    div.form-group
+      label(for='title') Title:
+      input#name.form-control(type='text', placeholder='' name='title')
+    
+    div.form-group
+      label(for='description') Description:
+      input#email.form-control(type='text', placeholder='' name='description')
+
+    button.btn.btn-primary(type='submit') Create
