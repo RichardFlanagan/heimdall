@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Review = mongoose.model('Review')
+var ReviewComment = mongoose.model('ReviewComment')
 
 
 // The index of Review, views all
@@ -11,11 +12,8 @@ exports.index = function (req, res) {
                 message: err,
             });
         }
-        res.json({
-            status: "success",
-            message: "Reviews retrieved successfully",
-            data: reviews
-        });
+
+        res.render('review/viewReviews', { reviews: reviews });
     });
 };
 
@@ -30,15 +28,14 @@ exports.createReview = function (req, res) {
 exports.create = function (req, res) {
     var review = new Review();
     review.title = req.body.title;
-    review.body = req.body.body;
-    // review.author = req.body.author
+    review.body = req.body.description;
+    review.author = req.session.user._id;
 
     review.save(function (err) {
         if (err){
             res.json(err);
         }
-        // res.redirect('reviews/'+review.username);
-        res.render('review/viewReview', { review: review });
+        res.redirect('reviews/'+review._id);
     });
 };
 
@@ -52,8 +49,20 @@ exports.viewReview = function (req, res) {
                 res.send(err);
             }
 
-            res.render('review/viewReview', { review: review });
-        }
+            var opts = [
+                {
+                    path:'author', 
+                    options:{ limit:1 }, 
+                    select:'-password -__v', 
+                    model:'User'
+                },
+            ];
+
+            Review.populate(review, opts, function (err, review) {
+                res.render('review/viewReview', { review: review });
+            });
+
+        },
     );
 };
 
@@ -84,3 +93,43 @@ exports.viewReview = function (req, res) {
 // exports.delete = function (req, res) {};
 
 
+// The POST action for adding a new comment to a Review
+exports.addComment = function (req, res) {
+    // var review = new Review();
+    // review.title = req.body.title;
+    // review.body = req.body.description;
+    // review.author = req.session.user._id;
+
+    // review.save(function (err) {
+    //     if (err){
+    //         res.json(err);
+    //     }
+    //     res.redirect('reviews/'+review._id);
+    // });
+    console.log(req.params)
+    console.log(req.body)
+
+    var comment = new ReviewComment();
+    comment.body = req.body.comment_body;
+    comment.author = req.session.user._id;
+
+
+    Review.findOne(
+        {"_id": req.params.reviewId}, 
+        function (err, review) {
+            if (err){
+                res.send(err);
+            }
+
+            var comment = new ReviewComment();
+            comment.body = req.body.comment_body;
+
+            review.comments.push(comment);
+
+            review.save(function(err, review){
+                res.render('review/viewReview', { review: review });
+            });
+        },
+    );
+
+};

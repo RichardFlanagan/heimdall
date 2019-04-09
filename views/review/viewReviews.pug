@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+  h1 View Reviews
+
+  ul
+    each review in reviews
+      li 
+        a(href='/reviews/'+review.id) #{review.title}

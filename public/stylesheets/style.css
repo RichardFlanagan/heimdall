@@ -54,3 +54,22 @@ label + input {
 input + input {
   float: right;
 }
+
+.toolbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #dddddd;
+  width: 100%;
+  height: 30px;
+  border: 1px solid blue;
+}
+
+.toolbar_item {
+  border: 1px solid red;
+  width:100px;
+  height:100%;
+  float: left;
+  text-align: left;
+
+}

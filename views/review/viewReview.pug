@@ -6,3 +6,15 @@ block content
   p Created at: #{review.dateCreated}
   p Description: #{review.body}
   p Completed: #{review.completed}
+
+  ul
+    each comment in review.comments
+      li #{comment.body}
+
+  form(method='POST' action='/reviews/'+review._id+'/comments')
+    div.form-group
+      label(for='comment_body') Comment:
+      textarea(rows=5).form-control(name='comment_body')
+    
+    button.btn.btn-primary(type='submit') Post
+
