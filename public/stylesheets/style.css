@@ -73,3 +73,56 @@ input + input {
   text-align: left;
 
 }
+
+.review_page {
+  background-color: #808080;
+}
+
+.review_container {
+  margin: 5px;
+  background-color: #909090;
+  border: 1px solid #505050;
+}
+.review_headerline {
+  margin: 10px;
+  font-size: 21px;
+  font-weight: bold;
+}
+.review_metadata {
+  margin: 10px;
+}
+.review_body {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #808080;
+  background-color: #d0d0d0;
+
+}
+
+.review_comments_container {
+  margin: 10px 15px 10px 15px;
+}
+.review_comment{
+  border: 1px solid #505050;
+  background-color: #909090;
+  margin-bottom: 10px;
+}
+.review_comment_headerline {
+  margin: 10px;
+}
+.review_comment_headerline_name {
+  font-size: 14px;
+}
+.review_comment_headerline_time {
+  font-size: 11px;
+}
+.review_comment_body {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #808080;
+  background-color: #d0d0d0;
+}
+.review_new_comment_container {
+  margin: 10px;
+  background-color: #909090;
+}

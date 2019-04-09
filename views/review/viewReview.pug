@@ -1,20 +1,35 @@
 extends ../layout
 
 block content
-  h1 #{review.title}
-  p Author: #{review.author.username}
-  p Created at: #{review.dateCreated}
-  p Description: #{review.body}
-  p Completed: #{review.completed}
+  .review_page
+    .review_container
 
-  ul
-    each comment in review.comments
-      li #{comment.body}
+      .review_headerline
+        a.review_headerline_title(href='/reviews/'+review.id) #{review.title}
 
-  form(method='POST' action='/reviews/'+review._id+'/comments')
-    div.form-group
-      label(for='comment_body') Comment:
-      textarea(rows=5).form-control(name='comment_body')
-    
-    button.btn.btn-primary(type='submit') Post
+      .review_metadata
+        p Author: #{review.author.username}
+        p Created: #{review.dateCreated}
+        p Status: #{review.status}
+
+      .review_body #{review.body}
+
+
+
+    .review_comments_container
+      each comment in review.comments
+        .review_comment
+          .review_comment_headerline
+            a.review_comment_headerline_name(href='/users/'+comment.author.username) #{comment.author.username}
+            span.review_comment_headerline_time  at #{comment.date}
+          .review_comment_body #{comment.body}
+
+
+    .review_new_comment_container
+      form(method='POST' action='/reviews/'+review.id+'/comments')
+        div.form-group
+          label(for='comment_body') Comment:
+          textarea(rows=5 name='comment_body').form-control
+        
+        button.btn.btn-primary(type='submit') Post
 

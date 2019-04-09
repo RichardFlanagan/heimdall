@@ -21,24 +21,27 @@ router.post('/login', function(req, res, next) {
 		username: req.body.username,
 		password: req.body.password
 	};
-	console.log(query)
 
-	User.findOne(query, function (err, user) {
-        if (err) {
-            res.send(err);
-        } else if(!user){
-        	res.send("error logging in")
-        } else{
-			// Regenerate session when signing in to prevent fixation
-			req.session.regenerate(function(){
-				// Store the user's primary key
-				// in the session store to be retrieved,
-				// or in this case the entire user object
-	        	req.session.user = user;
-	        	res.redirect('/users/'+user.username);
-	        });
-    	}
-    });
+	User.findOne(query)
+		.select('_id username')
+		.exec(
+			function (err, user) {
+
+		        if (err) {
+		            res.send(err);
+		        } else if(!user){
+		        	res.send("error logging in")
+		        } else{
+					// Regenerate session when signing in to prevent fixation
+					req.session.regenerate(function(){
+						// Store the user's primary key
+						// in the session store to be retrieved,
+			        	req.session.user = user;
+			        	res.redirect('/users/'+user.username);
+			        });
+		    	}
+		    }
+		);
 });
 
 module.exports = router;

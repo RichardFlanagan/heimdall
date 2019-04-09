@@ -29,7 +29,8 @@ exports.create = function (req, res) {
     var review = new Review();
     review.title = req.body.title;
     review.body = req.body.description;
-    review.author = req.session.user._id;
+    // review.author = req.session.user._id;
+    review.author = req.session.user;
 
     review.save(function (err) {
         if (err){
@@ -57,10 +58,12 @@ exports.viewReview = function (req, res) {
                     model:'User'
                 },
             ];
+                console.log(review)
 
-            Review.populate(review, opts, function (err, review) {
+            // Review.populate(review, opts, function (err, review) {
+            //     console.log(review)
                 res.render('review/viewReview', { review: review });
-            });
+            // });
 
         },
     );
@@ -95,24 +98,6 @@ exports.viewReview = function (req, res) {
 
 // The POST action for adding a new comment to a Review
 exports.addComment = function (req, res) {
-    // var review = new Review();
-    // review.title = req.body.title;
-    // review.body = req.body.description;
-    // review.author = req.session.user._id;
-
-    // review.save(function (err) {
-    //     if (err){
-    //         res.json(err);
-    //     }
-    //     res.redirect('reviews/'+review._id);
-    // });
-    console.log(req.params)
-    console.log(req.body)
-
-    var comment = new ReviewComment();
-    comment.body = req.body.comment_body;
-    comment.author = req.session.user._id;
-
 
     Review.findOne(
         {"_id": req.params.reviewId}, 
@@ -123,11 +108,12 @@ exports.addComment = function (req, res) {
 
             var comment = new ReviewComment();
             comment.body = req.body.comment_body;
+            comment.author = req.session.user
 
             review.comments.push(comment);
 
             review.save(function(err, review){
-                res.render('review/viewReview', { review: review });
+                res.redirect('/reviews/'+review._id);
             });
         },
     );
