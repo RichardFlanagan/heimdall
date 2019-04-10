@@ -69,16 +69,16 @@ router.post('/preferences', function(req, res){
 	            res.send(err);
 	        } 
 // this isn't atomic, consider refactor
-User.findOne({username: req.session.user.username})
-.exec(
-	function (err, user) {
-        if (err) {
-            res.send(err);
-        } 
-
-       	// res.render('preferences', {user: user});
-    }
-);
+// User.findOne({username: req.session.user.username})
+// .exec(
+// 	function (err, user) {
+//         if (err) {
+//             res.send(err);
+//         } 
+//         user.save
+//        	// res.render('preferences', {user: user});
+//     }
+// );
 
 	    }
 	);
