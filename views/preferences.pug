@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1 Preferences
+
+  p Username: #{user.username}
+
+  form(method='POST' action='/preferences')
+    div.form-group
+      select(name='registered_projects' size='8')
+        option(value='a') A
+        option(value='b') B
+        option(value='c') C
+    button.btn.btn-primary(type='submit') Update

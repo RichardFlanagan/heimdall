@@ -1,0 +1,18 @@
+Features
+	Review status
+	Review flow
+	Projects
+	Reviewers
+		Reviewer Types (watcher senior peer)
+	Tags
+	Priority
+	Metrics
+	Queues
+
+
+Refactors and high level overhauls
+	Refactor app.js to make sense
+	Look into token/session stores (redis)
+	Do actual security
+	Consider redefining api into view api and data api
+	Look into document structure and access patterns

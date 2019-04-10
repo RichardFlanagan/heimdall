@@ -3,6 +3,7 @@ var router = express.Router();
 
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Project = mongoose.model('Project');
 
 
 // Get homepage
@@ -42,6 +43,45 @@ router.post('/login', function(req, res, next) {
 		    	}
 		    }
 		);
+});
+
+
+router.get('/preferences', function(req, res){
+	User.findOne({username: req.session.user.username})
+	.exec(
+		function (err, user) {
+	        if (err) {
+	            res.send(err);
+	        } 
+
+	       	res.render('preferences', {user: user});
+	    }
+	);
+
+});
+
+router.post('/preferences', function(req, res){
+	Project.findOne({name: req.body.name})
+	.select('_id username')
+	.exec(
+		function (err, user) {
+	        if (err) {
+	            res.send(err);
+	        } 
+// this isn't atomic, consider refactor
+User.findOne({username: req.session.user.username})
+.exec(
+	function (err, user) {
+        if (err) {
+            res.send(err);
+        } 
+
+       	// res.render('preferences', {user: user});
+    }
+);
+
+	    }
+	);
 });
 
 module.exports = router;

@@ -2,39 +2,15 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
 
-// The index of User, views all
-exports.index = function (req, res) {
+// View all Users
+exports.viewUsers = function (req, res) {
     User.find({}, function (err, users) {
         if (err) {
             res.send(err);
         }
 
-        res.render('user/users', { users: users });
+        res.render('user/viewUsers', { users: users });
     });
-};
-
-
-// The POST action for creating a new User
-exports.create = function (req, res) {
-    var user = new User();
-    user.username = req.body.username;
-    user.password = req.body.password;
-
-    console.log(req.body)
-
-    user.save(function (err) {
-        if (err){
-            res.json(err);
-        }
-
-        res.redirect('users/'+user.username);
-    });
-};
-
-
-// The view for creating a new User
-exports.createUser = function (req, res) {
-    res.render('user/createUser');
 };
 
 
@@ -55,6 +31,35 @@ exports.viewUser = function (req, res) {
         }
     );
 };
+
+
+// The view for creating a new User
+exports.viewCreateUser = function (req, res) {
+    res.render('user/createUser');
+};
+
+
+// The endpoint for creating a new User
+exports.createUser = function (req, res) {
+    var user = new User();
+    user.username = req.body.username;
+    user.password = req.body.password;
+
+    console.log(req.body)
+
+    user.save(function (err) {
+        if (err){
+            res.json(err);
+        }
+
+        res.redirect('users/'+user.username);
+    });
+};
+
+
+
+
+
 
 
 // Handle update contact info

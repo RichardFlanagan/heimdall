@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-var userController = require('../controllers/userController');
+var projectController = require('../controllers/projectController');
 
 
 router.use('/',function(req, res, next){
@@ -14,10 +14,9 @@ router.use('/',function(req, res, next){
 	}
 });
 
-router.get('/', userController.viewUsers);
-router.post('/', userController.createUser);
-
-router.get('/create', userController.viewCreateUser);
-router.get('/:username', userController.viewUser);
+router.get('/', projectController.viewProjects);
+router.post('/', projectController.createProject);
+router.get('/create', projectController.viewCreateProject);
+router.get('/:project_name', projectController.viewProject);
 
 module.exports = router;
