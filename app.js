@@ -17,13 +17,15 @@ var reviewsRoutes = require('./routes/reviews');
 var projectsRoutes = require('./routes/projects');
 
 var app = express();
+var config = require('dotenv').config()
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // DB setup
-mongoose.connect('mongodb://localhost/heimdall_test', {useNewUrlParser: true});
+var dbUrl = 'mongodb+srv://' + process.env.DB_USER + ':' + process.env.DB_PASS + '@' + process.env.DB_HOST
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 // db.once('open', function() {
